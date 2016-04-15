@@ -18,11 +18,13 @@ fun startSwing() {
 fun getDeviceInfo(): Array<MidiDevice.Info> {
     var devicesInfo = MidiSystem.getMidiDeviceInfo();
 
+    println("Getting Midi Devices: ")
     for (info: MidiDevice.Info in devicesInfo) {
         println("_______________")
         println(info.name)
         println(info.description)
         println("----------------")
     }
+    println("Done getting devices")
     return devicesInfo;
 }
