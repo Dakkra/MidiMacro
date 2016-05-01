@@ -23,6 +23,7 @@ public class DeviceListener implements MidiDevice {
         this.listenerInfo = new DeviceListenerInfo(clientInfo.getName() + " LISTENER", "MidiMacro", "Device listener for " + clientInfo.getName(), "I");
         this.receiver = new DeviceListenerReceiver();
         this.eventMap = eventMap;
+        System.out.println("Created DeviceListener for: " + clientInfo.getName());
     }
 
     @Override
@@ -95,9 +96,10 @@ public class DeviceListener implements MidiDevice {
 
         @Override
         public void send(MidiMessage message, long timeStamp) {
-            if (isActive) {
-                assessEvent(message);
-            }
+//            if (isActive) {
+//                assessEvent(message);
+//            }
+            assessEvent(message);
         }
 
         @Override

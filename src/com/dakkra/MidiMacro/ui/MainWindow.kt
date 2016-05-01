@@ -18,7 +18,7 @@ class MainWindow : JFrame {
         initWindow()
         addStatusBar()
         addMenuBar()
-        addLeftPane()
+//        addLeftPane()
     }
 
     fun initWindow() {

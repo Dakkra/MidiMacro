@@ -2,10 +2,7 @@ package com.dakkra.MidiMacro;
 
 import com.dakkra.MidiMacro.MacroEvents.MacroAction;
 
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiEvent;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.Transmitter;
+import javax.sound.midi.*;
 import java.util.HashMap;
 
 public class DeviceProfile {
@@ -26,12 +23,18 @@ public class DeviceProfile {
         deviceId = this.deviceInfo.getName();
         try {
             midiDevice.open();
-            this.receiver = this.midiDevice.getReceiver();
-            this.transmitter = this.midiDevice.getTransmitter();
+            this.eventMap = loadEventMap();
             this.listenerDevice = new DeviceListener(midiDevice, eventMap);
             this.listenerReceiver = listenerDevice.getReceiver();
-            this.eventMap = loadEventMap();
-            transmitter.setReceiver(listenerReceiver);
+            if (this.midiDevice.getMaxReceivers() > 0) {
+                this.receiver = this.midiDevice.getReceiver();
+            }
+            if (this.midiDevice.getMaxTransmitters() > 0) {
+                this.transmitter = this.midiDevice.getTransmitter();
+                transmitter.setReceiver(listenerReceiver);
+                ShortMessage x = new ShortMessage();
+                x.setMessage(ShortMessage.NOTE_ON, 0, 60, 92);
+            }
             isEnabled = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,6 +43,7 @@ public class DeviceProfile {
             isEnabled = false;
         }
 
+        System.out.println("Created profile for: " + deviceInfo.getName());
     }
 
     public boolean getEnabled() {
