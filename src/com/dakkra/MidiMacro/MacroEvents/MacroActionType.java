@@ -1,5 +1,5 @@
 package com.dakkra.MidiMacro.MacroEvents;
 
-public enum MacroEventType {
+public enum MacroActionType {
     KEYBIND, SYSCALL
 }

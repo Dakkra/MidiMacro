@@ -1,6 +1,6 @@
 package com.dakkra.MidiMacro;
 
-import com.dakkra.MidiMacro.MacroEvents.MacroEvent;
+import com.dakkra.MidiMacro.MacroEvents.MacroAction;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiEvent;
@@ -17,7 +17,7 @@ public class DeviceProfile {
     private Receiver receiver;
     private Transmitter transmitter;
     private Receiver listenerReceiver;
-    private HashMap<MidiEvent, MacroEvent> eventMap;
+    private HashMap<MidiEvent, MacroAction> eventMap;
     private boolean isEnabled;
 
     public DeviceProfile(MidiDevice midiDevice) {

@@ -1,13 +1,13 @@
 package com.dakkra.MidiMacro.MacroEvents;
 
 
-public abstract class MacroEvent {
+public abstract class MacroAction {
 
-    protected MacroEventType eventType;
+    protected MacroActionType eventType;
 
     public abstract void fireEvent();
 
-    public MacroEventType getEventType() {
+    public MacroActionType getEventType() {
         return this.eventType;
     }
 
