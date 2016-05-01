@@ -1,22 +1,23 @@
 package com.dakkra.MidiMacro;
 
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.Transmitter;
+import javax.sound.midi.*;
 import java.util.List;
 
 public class DeviceListener implements MidiDevice {
 
+    private boolean active;
     private MidiDevice client;
     private MidiDevice.Info clientInfo;
+    private DeviceListenerReceiver receiver;
     private Info listenerInfo;
 
 
     public DeviceListener(MidiDevice client) {
+        this.active = true;
         this.client = client;
         this.clientInfo = client.getDeviceInfo();
         this.listenerInfo = new DeviceListenerInfo(clientInfo.getName() + " LISTENER", "MidiMacro", "Device listener for " + clientInfo.getName(), "I");
+        this.receiver = new DeviceListenerReceiver();
     }
 
     @Override
@@ -26,17 +27,20 @@ public class DeviceListener implements MidiDevice {
 
     @Override
     public void open() throws MidiUnavailableException {
-        //open listener
+        //TODO open listener
+        this.active = true;
     }
 
     @Override
     public void close() {
-        //close listener
+        //TODO close listener
+        receiver.close();
+        this.active = false;
     }
 
     @Override
     public boolean isOpen() {
-        return false;
+        return this.active;
     }
 
     @Override
@@ -77,6 +81,22 @@ public class DeviceListener implements MidiDevice {
     class DeviceListenerInfo extends MidiDevice.Info {
         public DeviceListenerInfo(String name, String vendor, String description, String version) {
             super(name, vendor, description, version);
+        }
+    }
+
+    class DeviceListenerReceiver implements Receiver {
+
+        private boolean isActive = true;
+
+        @Override
+        public void send(MidiMessage message, long timeStamp) {
+        }
+
+        @Override
+        public void close() {
+            if (isActive) {
+                isActive = false;
+            }
         }
     }
 }
