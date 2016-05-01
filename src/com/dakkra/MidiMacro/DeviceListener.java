@@ -1,6 +1,9 @@
 package com.dakkra.MidiMacro;
 
+import com.dakkra.MidiMacro.MacroEvents.MacroAction;
+
 import javax.sound.midi.*;
+import java.util.HashMap;
 import java.util.List;
 
 public class DeviceListener implements MidiDevice {
@@ -10,14 +13,16 @@ public class DeviceListener implements MidiDevice {
     private MidiDevice.Info clientInfo;
     private DeviceListenerReceiver receiver;
     private Info listenerInfo;
+    private HashMap<MidiEvent, MacroAction> eventMap;
 
 
-    public DeviceListener(MidiDevice client) {
+    public DeviceListener(MidiDevice client, HashMap<MidiEvent, MacroAction> eventMap) {
         this.active = true;
         this.client = client;
         this.clientInfo = client.getDeviceInfo();
         this.listenerInfo = new DeviceListenerInfo(clientInfo.getName() + " LISTENER", "MidiMacro", "Device listener for " + clientInfo.getName(), "I");
         this.receiver = new DeviceListenerReceiver();
+        this.eventMap = eventMap;
     }
 
     @Override
@@ -90,6 +95,9 @@ public class DeviceListener implements MidiDevice {
 
         @Override
         public void send(MidiMessage message, long timeStamp) {
+            if (isActive) {
+                assessEvent(message);
+            }
         }
 
         @Override
@@ -98,5 +106,10 @@ public class DeviceListener implements MidiDevice {
                 isActive = false;
             }
         }
+    }
+
+    private void assessEvent(MidiMessage message) {
+        System.out.println("Name: " + clientInfo.getName() + " Message: " + message.getMessage());
+
     }
 }

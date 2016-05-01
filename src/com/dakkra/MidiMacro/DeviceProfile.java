@@ -28,13 +28,15 @@ public class DeviceProfile {
             midiDevice.open();
             this.receiver = this.midiDevice.getReceiver();
             this.transmitter = this.midiDevice.getTransmitter();
-            this.listenerDevice = new DeviceListener(midiDevice);
+            this.listenerDevice = new DeviceListener(midiDevice, eventMap);
             this.listenerReceiver = listenerDevice.getReceiver();
+            this.eventMap = loadEventMap();
+            transmitter.setReceiver(listenerReceiver);
             isEnabled = true;
         } catch (Exception e) {
             e.printStackTrace();
             this.listenerDevice.close();
-            System.err.println("Failed to open/receive device: " + deviceId);
+            System.err.println("Failed to open device: " + deviceId);
             isEnabled = false;
         }
 
@@ -46,6 +48,10 @@ public class DeviceProfile {
 
     public String getDeviceId() {
         return deviceId;
+    }
+
+    public HashMap<MidiEvent, MacroAction> loadEventMap() {
+        return new HashMap<MidiEvent, MacroAction>();
     }
 
 }

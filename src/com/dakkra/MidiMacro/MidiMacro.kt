@@ -1,6 +1,7 @@
 package com.dakkra.MidiMacro
 
 import com.dakkra.MidiMacro.ui.MainWindow
+import java.util.*
 import javax.sound.midi.MidiDevice
 import javax.sound.midi.MidiSystem
 import javax.swing.SwingUtilities
@@ -9,6 +10,13 @@ fun main(args: Array<String>) {
     println("MidiMacro v.1")
     getDeviceInfo();
     SwingUtilities.invokeLater { startSwing() }
+    var devices = getDeviceInfo();
+    var profiles: ArrayList<DeviceProfile> = ArrayList();
+
+    for (device in devices) {
+        profiles.add(DeviceProfile(MidiSystem.getMidiDevice(device)));
+    }
+
 }
 
 fun startSwing() {
