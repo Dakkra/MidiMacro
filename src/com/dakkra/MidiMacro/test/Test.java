@@ -49,12 +49,28 @@ public class Test {
         @Override
         public void send(MidiMessage message, long timeStamp) {
             if (enabled) {
+                String messageStatus = "";
                 byte data[] = message.getMessage();
 
                 if (data.length > 3)
                     System.err.println("Invalid Data Message");
 
-                System.out.println("Name: " + mdInfo.getName() + " Status Message: " + data[0] + " Data1: " + data[1] + " Data2: " + data[2]);
+                switch (Math.abs(data[0])) {
+                    case (112): {
+                        messageStatus = "Note On";
+                        break;
+                    }
+                    case (128): {
+                        messageStatus = "Note Off";
+                        break;
+                    }
+                    default: {
+                        messageStatus = "" + data[0];
+                        break;
+                    }
+                }
+
+                System.out.println("Name: " + mdInfo.getName() + " Status Message: " + messageStatus + " Data1: " + data[1] + " Data2: " + data[2]);
             }
         }
 
