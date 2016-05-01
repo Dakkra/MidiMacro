@@ -49,7 +49,7 @@ public class Test {
         @Override
         public void send(MidiMessage message, long timeStamp) {
             if (enabled) {
-                String messageStatus = "";
+                String messageStatus;
                 byte data[] = message.getMessage();
 
                 if (data.length > 3)
