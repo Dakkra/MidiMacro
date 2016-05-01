@@ -2,6 +2,7 @@ package com.dakkra.MidiMacro;
 
 import com.dakkra.MidiMacro.macroactions.MacroAction;
 import com.dakkra.MidiMacro.macroactions.SysCallMacroAction;
+import com.dakkra.MidiMacro.util.midi.MidiMessageStatus;
 import com.dakkra.MidiMacro.util.midi.MidiMessageType;
 import com.dakkra.MidiMacro.util.midi.VerboseMessage;
 
@@ -35,7 +36,7 @@ public class DeviceProfile {
         }
 
         //Test hash map for use in mapping Messages and Actions
-        actionMap.put(new VerboseMessage(new byte[]{(byte) 0x90, (byte) 60, (byte) 127}), new SysCallMacroAction("mousepad"));
+        actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 60, 127}), new SysCallMacroAction("mousepad"));
     }
 
     public boolean isEnabled() {
