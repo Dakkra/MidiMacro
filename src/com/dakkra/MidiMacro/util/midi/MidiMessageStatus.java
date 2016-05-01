@@ -1,4 +1,4 @@
-package com.dakkra.MidiMacro.util;
+package com.dakkra.MidiMacro.util.midi;
 
 
 public class MidiMessageStatus {

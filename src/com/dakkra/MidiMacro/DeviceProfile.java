@@ -1,8 +1,12 @@
 package com.dakkra.MidiMacro;
 
-import com.dakkra.MidiMacro.util.MidiMessageStatus;
+import com.dakkra.MidiMacro.macroactions.MacroAction;
+import com.dakkra.MidiMacro.macroactions.SysCallMacroAction;
+import com.dakkra.MidiMacro.util.midi.MidiMessageType;
+import com.dakkra.MidiMacro.util.midi.VerboseMessage;
 
 import javax.sound.midi.*;
+import java.util.HashMap;
 
 public class DeviceProfile {
 
@@ -11,6 +15,7 @@ public class DeviceProfile {
     private MidiDevice.Info midiDeviceInfo;
     private Transmitter midiDeviceTransmitter;
     private MessageEar messageMonitor;
+    private HashMap<VerboseMessage, MacroAction> actionMap = new HashMap<>();
 
     public DeviceProfile(MidiDevice.Info midiDeviceInfo) {
         this.midiDeviceInfo = midiDeviceInfo;
@@ -29,6 +34,8 @@ public class DeviceProfile {
             System.out.println("Could not get transmitter for " + midiDeviceInfo.getName());
         }
 
+        //Test hash map for use in mapping Messages and Actions
+        actionMap.put(new VerboseMessage(new byte[]{(byte) 0x90, (byte) 60, (byte) 127}), new SysCallMacroAction("mousepad"));
     }
 
     public boolean isEnabled() {
@@ -63,22 +70,31 @@ public class DeviceProfile {
         this.enabled = enabled;
     }
 
-    private void assessMessage(MidiMessage message) {
-        String messageType;
-        byte data[] = message.getMessage();
-
-        switch (data[0]) {
-            case MidiMessageStatus.NOTE_ON: {
-                //Note on events here
-                messageType = "Note On";
+    private void assessMessage(VerboseMessage message) {
+        MidiMessageType type = message.getMessageType();
+        switch (type) {
+            case NOTE_ON: {
+                //TODO note on event calls here
+                MacroAction action = actionMap.get(message);
+                if (action != null)
+                    action.fireAction();
                 break;
             }
-            default: {
-                messageType = "" + data[0];
+            case NOTE_OFF: {
+                //TODO note off events here
+                break;
+            }
+            case PERCENT: {
+                //TODO percent events here
+                break;
+            }
+            case PITCHBEND: {
+                //TODO pitchbend events here
+                break;
             }
         }
 
-        System.out.println("Device::" + midiDeviceInfo.getName() + " Message Type::" + messageType + " Data1::" + data[1] + " Data2::" + data[2]);
+        System.out.println("Device::" + midiDeviceInfo.getName() + " MessageType::" + type.getTypeName() + " " + type.getFirstByteType() + " " + message.getFirstByte() + " " + type.getSecondByteType() + " " + message.getSecondByte());
     }
 
 
@@ -86,7 +102,7 @@ public class DeviceProfile {
 
         @Override
         public void send(MidiMessage message, long timeStamp) {
-            assessMessage(message);
+            assessMessage(new VerboseMessage(message.getMessage()));
         }
 
         @Override

@@ -1,4 +1,4 @@
-package com.dakkra.MidiMacro.macroevents;
+package com.dakkra.MidiMacro.macroactions;
 
 public class KeyBindMacroAction extends MacroAction {
 
@@ -7,7 +7,7 @@ public class KeyBindMacroAction extends MacroAction {
     }
 
     @Override
-    public void fireEvent() {
+    public void fireAction() {
 
     }
 }

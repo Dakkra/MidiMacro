@@ -1,12 +1,10 @@
 package com.dakkra.MidiMacro;
 
-import com.dakkra.MidiMacro.test.Test;
 import com.dakkra.MidiMacro.ui.MainWindow;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class MidiMacro {
@@ -31,7 +29,6 @@ public class MidiMacro {
         }
 
         Runtime.getRuntime().addShutdownHook(new Thread(MidiMacro::shutDown));
-
     }
 
     private static void makeFrame() {
