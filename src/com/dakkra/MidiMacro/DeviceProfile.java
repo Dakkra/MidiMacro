@@ -42,8 +42,10 @@ public class DeviceProfile {
     public void setEnabled(boolean enabled) {
         if (enabled) {
             try {
-                if (!midiDevice.isOpen())
+                if (!midiDevice.isOpen()) {
                     midiDevice.open();
+                    System.out.println("Opened Device " + midiDeviceInfo.getName());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -51,6 +53,7 @@ public class DeviceProfile {
             try {
                 if (midiDevice.isOpen()) {
                     midiDevice.close();
+                    System.out.println("Closed Device " + midiDeviceInfo.getName());
                 }
             } catch (Exception e) {
                 e.printStackTrace();

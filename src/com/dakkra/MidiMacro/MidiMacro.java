@@ -74,12 +74,11 @@ public class MidiMacro {
 
     private static void shutDown() {
         System.out.println("Shutting down...");
-        System.out.println("Closing Profiles:");
+        System.out.println("Closing profiles...");
         for (DeviceProfile profile : profiles) {
-            System.out.println("|-Closing " + profile.getInfo().getName());
             profile.setEnabled(false);
-            System.out.println("|-Closed " + profile.getInfo().getName());
         }
+        //TODO write out maps to file
         System.out.println("Finished shutdown process");
     }
 
