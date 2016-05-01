@@ -1,4 +1,4 @@
-package com.dakkra.MidiMacro.MacroEvents;
+package com.dakkra.MidiMacro.macroevents;
 
 public class KeyBindMacroAction extends MacroAction {
 

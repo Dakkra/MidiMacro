@@ -1,4 +1,4 @@
-package com.dakkra.MidiMacro.MacroEvents;
+package com.dakkra.MidiMacro.macroevents;
 
 
 public abstract class MacroAction {
