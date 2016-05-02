@@ -1,5 +1,8 @@
 package com.dakkra.MidiMacro.macroactions;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
 public class KeyBindMacroAction extends MacroAction {
 
     public KeyBindMacroAction() {
@@ -8,6 +11,21 @@ public class KeyBindMacroAction extends MacroAction {
 
     @Override
     public void fireAction() {
+        try {
+            Robot r = new Robot();
+            r.keyPress(KeyEvent.VK_C);
+            r.keyRelease(KeyEvent.VK_C);
+            r.keyPress(KeyEvent.VK_H);
+            r.keyRelease(KeyEvent.VK_H);
+            r.keyPress(KeyEvent.VK_R);
+            r.keyRelease(KeyEvent.VK_R);
+            r.keyPress(KeyEvent.VK_I);
+            r.keyRelease(KeyEvent.VK_I);
+            r.keyPress(KeyEvent.VK_S);
+            r.keyRelease(KeyEvent.VK_S);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

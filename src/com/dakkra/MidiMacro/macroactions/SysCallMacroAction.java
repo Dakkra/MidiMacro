@@ -8,7 +8,7 @@ public class SysCallMacroAction extends MacroAction {
         this.eventType = MacroActionType.SYSCALL;
         command = "";
     }
-
+    
     public SysCallMacroAction(String command) {
         this();
         this.command = command;

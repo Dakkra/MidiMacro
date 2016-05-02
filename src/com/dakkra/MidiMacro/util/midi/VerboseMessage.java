@@ -40,7 +40,7 @@ public class VerboseMessage extends MidiMessage {
 
     @Override
     public int hashCode() {
-        int sumOfBytes = messageStatus + firstByte + secondByte;
+        int sumOfBytes = messageStatus + firstByte;
         return (messageType.hashCode() + sumOfBytes);
     }
 
