@@ -23,7 +23,7 @@ public class SysCallMacroAction extends MacroAction {
     }
 
     @Override
-    public void fireAction() {
+    public void fireAction(byte data) {
         try {
             Runtime.getRuntime().exec(command);
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.dakkra.MidiMacro;
 
 import com.dakkra.MidiMacro.macroactions.KeyBindMacroAction;
 import com.dakkra.MidiMacro.macroactions.MacroAction;
+import com.dakkra.MidiMacro.macroactions.MasterVolumeMacroAction;
 import com.dakkra.MidiMacro.macroactions.SysCallMacroAction;
 import com.dakkra.MidiMacro.util.midi.MidiMessageStatus;
 import com.dakkra.MidiMacro.util.midi.MidiMessageType;
@@ -39,6 +40,7 @@ public class DeviceProfile {
         //Test hash map for use in mapping Messages and Actions
         actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 60, 127}), new SysCallMacroAction("mousepad"));
         actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 61, 127}), new KeyBindMacroAction());
+        actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.CONTROL_CHANGE, (byte) 0, 127}), new MasterVolumeMacroAction());
     }
 
     public boolean isEnabled() {
@@ -73,31 +75,34 @@ public class DeviceProfile {
         this.enabled = enabled;
     }
 
+    private void doHashAction(VerboseMessage message) {
+        MacroAction action = actionMap.get(message);
+        if (action != null)
+            action.fireAction(message.getValueByte());
+    }
+
     private void assessMessage(VerboseMessage message) {
         MidiMessageType type = message.getMessageType();
         switch (type) {
             case NOTE_ON: {
-                //TODO note on event calls here
-                MacroAction action = actionMap.get(message);
-                if (action != null)
-                    action.fireAction();
+                doHashAction(message);
                 break;
             }
             case NOTE_OFF: {
-                //TODO note off events here
+                doHashAction(message);
                 break;
             }
             case PERCENT: {
-                //TODO percent events here
+                doHashAction(message);
                 break;
             }
             case PITCHBEND: {
-                //TODO pitchbend events here
+                doHashAction(message);
                 break;
             }
         }
 
-        System.out.println("Device::" + midiDeviceInfo.getName() + " MessageType::" + type.getTypeName() + " " + type.getFirstByteType() + " " + message.getFirstByte() + " " + type.getSecondByteType() + " " + message.getSecondByte());
+        System.out.println("Device::" + midiDeviceInfo.getName() + " MessageType::" + type.getTypeName() + " " + type.getFirstByteType() + " " + message.getTargetByte() + " " + type.getSecondByteType() + " " + message.getValueByte());
     }
 
 

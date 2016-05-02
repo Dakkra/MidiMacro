@@ -6,14 +6,14 @@ public class VerboseMessage extends MidiMessage {
 
     private MidiMessageType messageType;
     private byte messageStatus;
-    private byte firstByte;
-    private byte secondByte;
+    private byte targetByte;
+    private byte valueByte;
 
     public VerboseMessage(byte[] data) {
         super(data);
         messageStatus = data[0];
-        firstByte = data[1];
-        secondByte = data[2];
+        targetByte = data[1];
+        valueByte = data[2];
         messageType = MidiMessageType.getMessageType(messageStatus);
     }
 
@@ -25,12 +25,12 @@ public class VerboseMessage extends MidiMessage {
         return messageStatus;
     }
 
-    public byte getFirstByte() {
-        return firstByte;
+    public byte getTargetByte() {
+        return targetByte;
     }
 
-    public byte getSecondByte() {
-        return secondByte;
+    public byte getValueByte() {
+        return valueByte;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class VerboseMessage extends MidiMessage {
 
     @Override
     public int hashCode() {
-        int sumOfBytes = messageStatus + firstByte;
+        int sumOfBytes = messageStatus + targetByte;
         return (messageType.hashCode() + sumOfBytes);
     }
 

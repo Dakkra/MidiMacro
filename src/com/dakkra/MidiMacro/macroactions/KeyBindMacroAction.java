@@ -10,11 +10,13 @@ public class KeyBindMacroAction extends MacroAction {
     }
 
     @Override
-    public void fireAction() {
+    public void fireAction(byte data) {
         try {
             Robot r = new Robot();
+            r.keyPress(KeyEvent.VK_SHIFT);
             r.keyPress(KeyEvent.VK_C);
             r.keyRelease(KeyEvent.VK_C);
+            r.keyRelease(KeyEvent.VK_SHIFT);
             r.keyPress(KeyEvent.VK_H);
             r.keyRelease(KeyEvent.VK_H);
             r.keyPress(KeyEvent.VK_R);
@@ -23,6 +25,8 @@ public class KeyBindMacroAction extends MacroAction {
             r.keyRelease(KeyEvent.VK_I);
             r.keyPress(KeyEvent.VK_S);
             r.keyRelease(KeyEvent.VK_S);
+            r.keyPress(KeyEvent.VK_SPACE);
+            r.keyRelease(KeyEvent.VK_SPACE);
         } catch (Exception e) {
             e.printStackTrace();
         }
