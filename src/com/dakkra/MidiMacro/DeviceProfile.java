@@ -38,8 +38,11 @@ public class DeviceProfile {
         }
 
         //Test hash map for use in mapping Messages and Actions
+        //Text editor on Middle C
         actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 60, 127}), new SysCallMacroAction("mousepad"));
+        //Type "Chris " on MiddleC#
         actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 61, 127}), new KeyBindMacroAction());
+        //Use fader 0 to control volume
         actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.CONTROL_CHANGE, (byte) 0, 127}), new MasterVolumeMacroAction());
     }
 
