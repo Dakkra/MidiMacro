@@ -1,4 +1,4 @@
-package com.dakkra.MidiMacro;
+package com.dakkra.MidiMacro.phhs;
 
 import com.dakkra.MidiMacro.macroactions.MacroAction;
 import com.dakkra.MidiMacro.macroactions.MasterVolumeMacroAction;

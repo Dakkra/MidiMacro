@@ -1,11 +1,7 @@
 package com.dakkra.MidiMacro;
 
-import com.dakkra.MidiMacro.macroactions.KeyBindMacroAction;
 import com.dakkra.MidiMacro.macroactions.MacroAction;
-import com.dakkra.MidiMacro.macroactions.MasterVolumeMacroAction;
-import com.dakkra.MidiMacro.macroactions.SysCallMacroAction;
-import com.dakkra.MidiMacro.util.keyboard.KeySequence;
-import com.dakkra.MidiMacro.util.midi.MidiMessageStatus;
+import com.dakkra.MidiMacro.phhs.PHHSActionMap;
 import com.dakkra.MidiMacro.util.midi.MidiMessageType;
 import com.dakkra.MidiMacro.util.midi.VerboseMessage;
 
