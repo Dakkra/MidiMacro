@@ -1,32 +1,23 @@
 package com.dakkra.MidiMacro.macroactions;
 
+import com.dakkra.MidiMacro.util.keyboard.KeySequence;
+
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class KeyBindMacroAction extends MacroAction {
 
-    public KeyBindMacroAction() {
+    KeySequence seq;
+
+    public KeyBindMacroAction(KeySequence seq) {
         this.eventType = MacroActionType.KEYBIND;
+        this.seq = seq;
     }
 
     @Override
     public void fireAction(byte data) {
         try {
             Robot r = new Robot();
-            r.keyPress(KeyEvent.VK_SHIFT);
-            r.keyPress(KeyEvent.VK_C);
-            r.keyRelease(KeyEvent.VK_C);
-            r.keyRelease(KeyEvent.VK_SHIFT);
-            r.keyPress(KeyEvent.VK_H);
-            r.keyRelease(KeyEvent.VK_H);
-            r.keyPress(KeyEvent.VK_R);
-            r.keyRelease(KeyEvent.VK_R);
-            r.keyPress(KeyEvent.VK_I);
-            r.keyRelease(KeyEvent.VK_I);
-            r.keyPress(KeyEvent.VK_S);
-            r.keyRelease(KeyEvent.VK_S);
-            r.keyPress(KeyEvent.VK_SPACE);
-            r.keyRelease(KeyEvent.VK_SPACE);
+            seq.RunKeys(r);
         } catch (Exception e) {
             e.printStackTrace();
         }

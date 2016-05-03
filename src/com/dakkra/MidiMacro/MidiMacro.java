@@ -9,24 +9,16 @@ import java.util.ArrayList;
 
 public class MidiMacro {
 
+    private static boolean logging = false;
     private static ArrayList<MidiDevice.Info> midiDevices;
     private static ArrayList<DeviceProfile> profiles;
 
     public static void main(String[] args) {
         System.out.println("MidiMacro v.1");
         midiDevices = getUniqueMidiDeviceInfo();
-        profiles = new ArrayList<>();
         SwingUtilities.invokeLater(MidiMacro::makeFrame);
 
-        //Create all profiles
-        for (MidiDevice.Info device : midiDevices) {
-            profiles.add(new DeviceProfile(device));
-        }
-
-        //Open all profiles
-        for (DeviceProfile profile : profiles) {
-            profile.setEnabled(true);
-        }
+        openProfiles();
 
         Runtime.getRuntime().addShutdownHook(new Thread(MidiMacro::shutDown));
     }
@@ -69,14 +61,38 @@ public class MidiMacro {
         return uniqueInfo;
     }
 
-    private static void shutDown() {
+    public static void shutDown() {
         System.out.println("Shutting down...");
         System.out.println("Closing profiles...");
+        //TODO write out maps to file
+        System.out.println("Finished shutdown process");
+    }
+
+    public static void closeProfiles() {
         for (DeviceProfile profile : profiles) {
             profile.setEnabled(false);
         }
-        //TODO write out maps to file
-        System.out.println("Finished shutdown process");
+    }
+
+    public static void openProfiles() {
+        profiles = new ArrayList<>();
+
+        //Create all profiles
+        for (MidiDevice.Info device : midiDevices) {
+            profiles.add(new DeviceProfile(device));
+        }
+        //Open all profiles
+        for (DeviceProfile profile : profiles) {
+            profile.setEnabled(true);
+        }
+    }
+
+    public static boolean isLogging() {
+        return logging;
+    }
+
+    public static void setLogging(boolean bool) {
+        logging = bool;
     }
 
 }

@@ -4,6 +4,7 @@ import com.dakkra.MidiMacro.macroactions.KeyBindMacroAction;
 import com.dakkra.MidiMacro.macroactions.MacroAction;
 import com.dakkra.MidiMacro.macroactions.MasterVolumeMacroAction;
 import com.dakkra.MidiMacro.macroactions.SysCallMacroAction;
+import com.dakkra.MidiMacro.util.keyboard.KeySequence;
 import com.dakkra.MidiMacro.util.midi.MidiMessageStatus;
 import com.dakkra.MidiMacro.util.midi.MidiMessageType;
 import com.dakkra.MidiMacro.util.midi.VerboseMessage;
@@ -37,13 +38,8 @@ public class DeviceProfile {
             System.out.println("Could not get transmitter for " + midiDeviceInfo.getName());
         }
 
-        //Test hash map for use in mapping Messages and Actions
-        //Text editor on Middle C
-        actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 60, 127}), new SysCallMacroAction("mousepad"));
-        //Type "Chris " on MiddleC#
-        actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.NOTE_ON, (byte) 61, 127}), new KeyBindMacroAction());
-        //Use fader 0 to control volume
-        actionMap.put(new VerboseMessage(new byte[]{MidiMessageStatus.CONTROL_CHANGE, (byte) 0, 127}), new MasterVolumeMacroAction());
+        actionMap = PHHSActionMap.getActionMap();
+
     }
 
     public boolean isEnabled() {
@@ -105,7 +101,8 @@ public class DeviceProfile {
             }
         }
 
-        System.out.println("Device::" + midiDeviceInfo.getName() + " MessageType::" + type.getTypeName() + " " + type.getFirstByteType() + " " + message.getTargetByte() + " " + type.getSecondByteType() + " " + message.getValueByte());
+        if (MidiMacro.isLogging())
+            System.out.println("Device::" + midiDeviceInfo.getName() + " MessageType::" + type.getTypeName() + " " + type.getFirstByteType() + " " + message.getTargetByte() + " " + type.getSecondByteType() + " " + message.getValueByte());
     }
 
 
