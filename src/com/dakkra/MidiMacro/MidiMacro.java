@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MidiMacro {
 
-    private static boolean logging = false;
+    private static boolean logging = true;
     private static ArrayList<MidiDevice.Info> midiDevices;
     private static ArrayList<DeviceProfile> profiles;
 
