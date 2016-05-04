@@ -69,6 +69,7 @@ public class MidiMacro {
         System.out.println("Shutting down...");
         System.out.println("Closing profiles...");
         //TODO write out maps to file
+        closeProfiles();
         System.out.println("Finished shutdown process");
     }
 
