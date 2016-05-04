@@ -9,7 +9,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.Mixer;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 
 public class MidiMacro {
@@ -20,7 +19,6 @@ public class MidiMacro {
 
     public static void main(String[] args) {
         System.out.println("MidiMacro v.1");
-        openMixers();
         midiDevices = getUniqueMidiDeviceInfo();
         SwingUtilities.invokeLater(MidiMacro::makeFrame);
         openProfiles();
@@ -89,29 +87,6 @@ public class MidiMacro {
         //Open all profiles
         for (DeviceProfile profile : profiles) {
             profile.setEnabled(true);
-        }
-    }
-
-    private static void openMixers() {
-        try {
-            Mixer.Info mixerInfo[] = AudioSystem.getMixerInfo();
-            Mixer mixer;
-            Line l;
-
-            for (Mixer.Info m : mixerInfo) {
-                if (m.getName().toLowerCase().contains("speaker")) {
-                    System.out.println(m.getName());
-                    mixer = AudioSystem.getMixer(m);
-                    mixer.open();
-                    for (Line.Info li : mixer.getTargetLineInfo()) {
-                        System.out.println(li.toString());
-                        l = AudioSystem.getLine(li);
-                        l.open();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
