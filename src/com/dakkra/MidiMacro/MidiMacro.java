@@ -1,13 +1,9 @@
 package com.dakkra.MidiMacro;
 
 import com.dakkra.MidiMacro.ui.MainWindow;
-import ilarkesto.media.Audio;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.Mixer;
 import javax.swing.*;
 import java.util.ArrayList;
 

@@ -15,6 +15,7 @@ public class HybridMacroAction extends MacroAction {
     }
 
     public void addAction(MacroAction action) {
+        this.eventType = MacroActionType.HYBRID;
         actions.add(action);
     }
 

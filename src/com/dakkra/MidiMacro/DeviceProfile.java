@@ -1,7 +1,6 @@
 package com.dakkra.MidiMacro;
 
 import com.dakkra.MidiMacro.macroactions.MacroAction;
-import com.dakkra.MidiMacro.phhs.PHHSActionMap;
 import com.dakkra.MidiMacro.util.midi.MidiMessageType;
 import com.dakkra.MidiMacro.util.midi.VerboseMessage;
 
@@ -34,7 +33,7 @@ public class DeviceProfile {
             System.out.println("Could not get transmitter for " + midiDeviceInfo.getName());
         }
 
-        actionMap = PHHSActionMap.getActionMap();
+        actionMap = null;
 
     }
 
