@@ -32,9 +32,6 @@ public class DeviceProfile {
         } catch (Exception e) {
             System.out.println("Could not get transmitter for " + midiDeviceInfo.getName());
         }
-
-        actionMap = null;
-
     }
 
     public boolean isEnabled() {
