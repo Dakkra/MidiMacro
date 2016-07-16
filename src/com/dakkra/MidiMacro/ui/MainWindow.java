@@ -9,17 +9,24 @@ import java.awt.event.ActionListener;
 
 public class MainWindow extends JFrame {
 
+    private JPanel contentPanel = new JPanel();
+    private JButton disableButton = new JButton("Disable");
+    private JLabel titleLabel = new JLabel("Midi Macro");
+
     public MainWindow() {
         setTitle("Midi Macro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(new Dimension(200, 200));
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
 
-        JButton disableButton = new JButton("Disable");
         disableButton.addActionListener(new DisableButtonEar(disableButton));
 
-        add(disableButton, BorderLayout.CENTER);
+        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 30));
+
+        contentPanel.add(titleLabel, BorderLayout.NORTH);
+        contentPanel.add(disableButton, BorderLayout.CENTER);
+        add(contentPanel, BorderLayout.CENTER);
     }
 
     class DisableButtonEar implements ActionListener {

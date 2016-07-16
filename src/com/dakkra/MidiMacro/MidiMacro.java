@@ -1,24 +1,38 @@
 package com.dakkra.MidiMacro;
 
+import com.dakkra.MidiMacro.macroactions.MacroAction;
 import com.dakkra.MidiMacro.ui.MainWindow;
+import com.dakkra.MidiMacro.util.io.MapBindingUtil;
+import com.dakkra.MidiMacro.util.io.StartupUtil;
+import com.dakkra.MidiMacro.util.midi.VerboseMessage;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiSystem;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class MidiMacro {
 
     private static boolean logging = true;
     private static ArrayList<MidiDevice.Info> midiDevices;
     private static ArrayList<DeviceProfile> profiles;
+    private static HashMap<VerboseMessage, MacroAction> globalActionMap;
+    private static int profileCountCache = 0;
 
     public static void main(String[] args) {
         System.out.println("MidiMacro v.1");
+        StartupUtil.fileSysCheck();
         midiDevices = getUniqueMidiDeviceInfo();
         SwingUtilities.invokeLater(MidiMacro::makeFrame);
         openProfiles();
+        globalActionMap = MapBindingUtil.loadGlobalMap();
         Runtime.getRuntime().addShutdownHook(new Thread(MidiMacro::shutDown));
+    }
+
+    private static int getNumProfiles() {
+        return profiles.size();
     }
 
     private static void makeFrame() {
@@ -60,30 +74,45 @@ public class MidiMacro {
     }
 
     public static void shutDown() {
-        System.out.println("Shutting down...");
-        System.out.println("Closing profiles...");
+        System.out.println("----------");
+        System.out.println("::Shutting down...");
         //TODO write out maps to file
         closeProfiles();
-        System.out.println("Finished shutdown process");
+        System.out.println("::Finished shutdown process");
+        System.out.println("----------");
     }
 
     public static void closeProfiles() {
+        System.out.println("Closing profiles...");
+        int closeCount = 0;
         for (DeviceProfile profile : profiles) {
             profile.setEnabled(false);
+            closeCount++;
         }
+
+        ArrayList<DeviceProfile> clone = (ArrayList<DeviceProfile>) profiles.clone();
+
+        for (DeviceProfile cProfile : clone) {
+            profiles.remove(cProfile);
+        }
+
+        System.out.println("Closed " + closeCount + "/" + profileCountCache + " profiles");
+        profileCountCache = 0;
     }
 
     public static void openProfiles() {
+        System.out.println("Opening profiles");
         profiles = new ArrayList<>();
 
         //Create all profiles
-        for (MidiDevice.Info device : midiDevices) {
-            profiles.add(new DeviceProfile(device));
-        }
+        profiles.addAll(midiDevices.stream().map(DeviceProfile::new).collect(Collectors.toList()));
         //Open all profiles
         for (DeviceProfile profile : profiles) {
             profile.setEnabled(true);
         }
+
+        System.out.println("Opened " + getNumProfiles() + "/" + midiDevices.size() + " profiles");
+        profileCountCache = getNumProfiles();
     }
 
     public static boolean isLogging() {
