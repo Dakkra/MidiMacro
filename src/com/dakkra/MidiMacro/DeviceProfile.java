@@ -42,6 +42,10 @@ public class DeviceProfile {
         return midiDeviceInfo;
     }
 
+    public void setActionMap (HashMap<VerboseMessage, MacroAction> actionMap) {
+        this.actionMap = actionMap;
+    }
+
     public void setEnabled(boolean enabled) {
         if (enabled) {
             try {

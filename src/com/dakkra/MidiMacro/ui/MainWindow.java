@@ -16,6 +16,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         setTitle("Midi Macro");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //TODO get dimensions from user screen size
         setSize(new Dimension(200, 200));
         setResizable(true);
         setLocationRelativeTo(null);
