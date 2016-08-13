@@ -100,7 +100,8 @@ public class DeviceProfile {
                 break;
             }
             default: {
-                System.out.println("Unknown message");
+                if (MidiMacro.isLogging())
+                    System.out.println("Device::" + "UNKNOWN MESSAGE");
                 break;
             }
         }
