@@ -42,7 +42,7 @@ public class DeviceProfile {
         return midiDeviceInfo;
     }
 
-    public void setActionMap (HashMap<VerboseMessage, MacroAction> actionMap) {
+    public void setActionMap(HashMap<VerboseMessage, MacroAction> actionMap) {
         this.actionMap = actionMap;
     }
 
@@ -78,6 +78,10 @@ public class DeviceProfile {
 
     private void assessMessage(VerboseMessage message) {
         MidiMessageType type = message.getMessageType();
+
+        if (type == null)
+            return;
+
         switch (type) {
             case NOTE_ON: {
                 doHashAction(message);
@@ -93,6 +97,10 @@ public class DeviceProfile {
             }
             case PITCHBEND: {
                 doHashAction(message);
+                break;
+            }
+            default: {
+                System.out.println("Unknown message");
                 break;
             }
         }
