@@ -55,6 +55,7 @@ public class MainArgumentsProcessor {
 
     private static void printVersion() {
         System.out.println(MidiMacro.getVersionString());
+        System.out.println("(C) Chris Soderquist (Dakkra)");
     }
 
 }
