@@ -2,6 +2,7 @@ package com.dakkra.MidiMacro;
 
 import com.dakkra.MidiMacro.macroactions.MacroAction;
 import com.dakkra.MidiMacro.ui.MainWindow;
+import com.dakkra.MidiMacro.util.MainArgumentsProcessor;
 import com.dakkra.MidiMacro.util.io.MapBindingUtil;
 import com.dakkra.MidiMacro.util.io.StartupUtil;
 import com.dakkra.MidiMacro.util.midi.VerboseMessage;
@@ -15,14 +16,19 @@ import java.util.stream.Collectors;
 
 public class MidiMacro {
 
-    private static boolean logging = true;
+    private static String versionString = "MidiMacro v.1";
+    private static boolean logging = false;
     private static ArrayList<MidiDevice.Info> midiDevices;
     private static ArrayList<DeviceProfile> profiles;
     private static HashMap<VerboseMessage, MacroAction> globalActionMap;
     private static int profileCountCache = 0;
 
     public static void main(String[] args) {
-        System.out.println("MidiMacro v.1");
+        MainArgumentsProcessor.processArguments(args);
+    }
+
+    public static void startProgram() {
+        System.out.println(versionString);
         StartupUtil.fileSysCheck();
         midiDevices = getUniqueMidiDeviceInfo();
         SwingUtilities.invokeLater(MidiMacro::makeFrame);
@@ -123,4 +129,7 @@ public class MidiMacro {
         logging = bool;
     }
 
+    public static String getVersionString() {
+        return versionString;
+    }
 }
