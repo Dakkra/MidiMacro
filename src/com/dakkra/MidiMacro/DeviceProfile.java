@@ -79,8 +79,11 @@ public class DeviceProfile {
     private void assessMessage(VerboseMessage message) {
         MidiMessageType type = message.getMessageType();
 
-        if (type == null)
+        if (type == null) {
+            if (MidiMacro.isLogging())
+                System.out.println("Device::" + midiDeviceInfo.getName() + " NULL MESSAGE");
             return;
+        }
 
         switch (type) {
             case NOTE_ON: {
@@ -101,7 +104,7 @@ public class DeviceProfile {
             }
             default: {
                 if (MidiMacro.isLogging())
-                    System.out.println("Device::" + "UNKNOWN MESSAGE");
+                    System.out.println("Device::" + midiDeviceInfo.getName() + " UNKNOWN MESSAGE");
                 break;
             }
         }
